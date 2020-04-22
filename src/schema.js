@@ -23,6 +23,7 @@ module.exports = buildSchema(`
         buildingName: String
         buildingNumber: Int
         buildingCenter: Location
+        buildingPolygons: [[Location]]
     }
 
     type Location {

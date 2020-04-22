@@ -2,12 +2,12 @@ const axios = require('axios');
 const log = console.log;
 const agis = {
     buildingsForCampus:    (args) => {
-        return fetchNewBrunswick(args);
+        return fetchCampus(args);
     },
 };
 
 
-const fetchNewBrunswick = async args => {
+const fetchCampus = async args => {
     let xMin = null;
     let yMin = null;
     let xMax = null;
@@ -55,5 +55,5 @@ const fetchNewBrunswick = async args => {
 
 module.exports = {
     agisBase: agis,
-    fetchNewBrunswick
+    fetchCampus
 };
