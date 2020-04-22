@@ -13,9 +13,21 @@ module.exports = buildSchema(`
 		segmentsByName(name: String!) : SegmentsResult
 		routesByName(name: String) : [RoutesByNameResult]
 		stopsWithRoutes : [StopsWithRoutesResult]
-		nearbyStops(lat1 : Float!, lon1: Float!) : [Stop] 
+        nearbyStops(lat1 : Float!, lon1: Float!) : [Stop] 
+        buildingsForCampus(campus: String!) : [Building]
         directions(user_lat: Float!, user_lng: Float!, dest_lat: Float!, dest_lng: Float!) : DirectionResult
         alerts : [AlertsResult]
+    }
+
+    type Building {
+        buildingName: String
+        buildingNumber: Int
+        buildingCenter: Location
+    }
+
+    type Location {
+        lat: String
+        lng: String
     }
     
     type AlertsResult {
