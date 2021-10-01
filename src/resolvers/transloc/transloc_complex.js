@@ -112,12 +112,6 @@ async function getRoutesAll(){
     const response = await getRoutes(null);
     let res = response['data'];
     res = res.filter((route) => { return route['is_active'] === true});
-    res = res.filter((route) => {
-        // due to covid19 routes no longer active
-        // remove routes from inactive routes. Should be dynamically checked with another API call.
-        return ['Route REXB', 'Route REXL', 'Route A', 'Route F', 'Route C', 'Route B' ,'Route H', 'Route LX', 'Route EE']
-            .indexOf(route['long_name']) === -1;
-    })
 
     let allRoutes = [];
 
