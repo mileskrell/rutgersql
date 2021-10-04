@@ -127,6 +127,10 @@ async function getRoutesAll(){
 async function getRoutesByName (args){
     const rt_name = args['name'] || null;
     const response = await getRoutes(null);
+    if (response === undefined) {
+        console.log('getRoutesByName received undefined; returning undefined');
+        return undefined;
+    }
     const res = response['data'];
     let route_obj = null;
     if(rt_name){
