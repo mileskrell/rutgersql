@@ -19,8 +19,16 @@ async function getAlerts() {
             if (err) {
                 reject(err);
             } else {
-                const items = result.rss.channel[0].item;
-                resolve(result.rss.channel[0].item);
+                // TODO: Confirm that this works properly when we have multiple announcements
+                const items = result.rss.channel[0].item.map(item => (
+                    {
+                        title: item.title[0],
+                        guid: item.guid[0],
+                        pubDate: item.pubDate[0],
+                        description: item.description[0],
+                    }
+                ));
+                resolve(items);
             }
         })
     });
