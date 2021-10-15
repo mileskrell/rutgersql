@@ -44,7 +44,9 @@ const getStops = async args => {
 // Needs to be unnested.
 const getRoutes = async args => {
     const URL = config.API_URL + '/routes.json';
-    return await queryAPI(URL,args,true);
+    const routes = await queryAPI(URL, args, true);
+    routes.data.sort((a, b) => (a.long_name < b.long_name) ? -1 : 1);
+    return routes;
 };
 
 const getArrivals = async args => {
