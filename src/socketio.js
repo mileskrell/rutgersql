@@ -24,9 +24,11 @@ class SocketAPI {
             setInterval(async () => {
                 try {
                     const data = await root.alerts();
+                    console.log("Fetched alerts")
                     const responseAsString = data.toString();
                     if(responseAsString.hashCode() != this.lastAlertsHash){
                         socket.emit("alerts", data);
+                        console.log("Emitted alerts")
                     }
                 } catch (e) {
                     console.error(`Error fetching alerts: ${e}`)
@@ -38,6 +40,7 @@ class SocketAPI {
                     try {
                         const data = await root.alerts();
                         socket.emit("alerts", data);
+                        console.log("Fetched and emitted alerts")
                     } catch (e) {
                         console.error(`Error fetching alerts: ${e}`)
                     }
