@@ -22,17 +22,25 @@ class SocketAPI {
             }, 1000 * 7);
             // alerts emitted if hash of prev alert is diff
             setInterval(async () => {
-                const data = await root.alerts({});
-                const responseAsString = data.toString();
-                if(responseAsString.hashCode() != this.lastAlertsHash){
-                    socket.emit("alerts", data);
+                try {
+                    const data = await root.alerts();
+                    const responseAsString = data.toString();
+                    if(responseAsString.hashCode() != this.lastAlertsHash){
+                        socket.emit("alerts", data);
+                    }
+                } catch (e) {
+                    console.error(`Error fetching alerts: ${e}`)
                 }
         }, 1000 * 7);
 
             io.on('alerts', async (socket) => {
                 setInterval(async () => {
-                    const data = await root.alerts();
-                    socket.emit("alerts", data);
+                    try {
+                        const data = await root.alerts();
+                        socket.emit("alerts", data);
+                    } catch (e) {
+                        console.error(`Error fetching alerts: ${e}`)
+                    }
              }, 1000 * 7);
             });
 
