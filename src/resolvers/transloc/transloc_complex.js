@@ -99,7 +99,7 @@ async function getVehiclesByName(args){
     const map = {};
 
     // map route_id to name
-    res.forEach((it) => {map[it.route_id] = it.long_name});
+    res.forEach((it) => {map[it.route_id] = it.short_name});
     const vehicles = await getVehicles();
     let v = vehicles['data'];
     const vehicles_filtered = v.filter(it => map[it.route_id] === route_name);
@@ -117,7 +117,7 @@ async function getRoutesAll(){
 
     for(let i = 0; i < res.length; i++){
         // console.log("calling getRoutesByName " + res.length + " times");
-        const route = await getRoutesByName({name : res[i]['long_name']});
+        const route = await getRoutesByName({name : res[i]['short_name']});
         allRoutes.push(route);
     }
     allRoutes = allRoutes.filter((route) => {return route['vehicles'].length > 0});
@@ -134,7 +134,7 @@ async function getRoutesByName (args){
     const res = response['data'];
     let route_obj = null;
     if(rt_name){
-        route_obj = res.filter((it) => (it.long_name === rt_name));
+        route_obj = res.filter((it) => (it.short_name === rt_name));
     } else {
        const rts = await getRoutesAll();
        console.log(rts);
