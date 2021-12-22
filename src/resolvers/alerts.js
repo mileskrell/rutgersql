@@ -20,15 +20,20 @@ async function getAlerts() {
                 reject(err);
             } else {
                 // TODO: Confirm that this works properly when we have multiple announcements
-                const items = result.rss.channel[0].item.map(item => (
-                    {
-                        title: item.title[0],
-                        guid: item.guid[0],
-                        pubDate: item.pubDate[0],
-                        description: item.description[0],
-                    }
-                ));
-                resolve(items);
+                if (!result.rss.channel[0].item) {
+                    // When there are no announcements, there will be no "item" key
+                    resolve([]);
+                } else {
+                    const items = result.rss.channel[0].item.map(item => (
+                        {
+                            title: item.title[0],
+                            guid: item.guid[0],
+                            pubDate: item.pubDate[0],
+                            description: item.description[0],
+                        }
+                    ));
+                    resolve(items);
+                }
             }
         })
     });
