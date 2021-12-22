@@ -68,7 +68,7 @@ describe('resolvers', function(){
         it('it should get all the vehicles by name. should return ALL routes. see test.js', async function(){
             const routes = ["Route LX", "Route A", "Route H", "Route F", "Route EE", "Route B", "Route REXB", "Route REXL"];
             for (let i = 0; i < routes.length; i++) {
-                const vehicles = await complexResolvers.vehiclesByName({name: routes[i]});
+                const vehicles = await complexResolvers.vehiclesByName(routes[i]);
                 assert(vehicles !== null);
                 assert(vehicles !== undefined);
                 assert(vehicles.length != 0);
@@ -80,7 +80,7 @@ describe('resolvers', function(){
         it('it should get all the vehicles by name. should return ALL routes. see test.js', async function(){
             const routes = ["Route LX", "Route A", "Route H", "Route F", "Route EE", "Route B", "Route REXB", "Route REXL"];
             for (let i = 0; i < routes.length; i++) {
-                const data = await complexResolvers.routesByName({name: routes[i]});
+                const data = await complexResolvers.routesByName(routes[i]);
                 assert(data !== null);
                 assert(data !== undefined);
 
@@ -103,7 +103,7 @@ describe('complex_resolvers', () => {
     describe('getVehiclesByName', async () => {
         const routes = ["Route LX", "Route A", "Route H", "Route F", "Route EE", "Route B", "Route REXB", "Route REXL"];
         for(let i = 0; i < routes.length; i++){
-            const vehicles = await complexResolvers.vehiclesByName( {name :routes[i]});
+            const vehicles = await complexResolvers.vehiclesByName(routes[i]);
             assert(vehicles !== null);
             assert(vehicles !== undefined);
             assert(vehicles.length != 0);

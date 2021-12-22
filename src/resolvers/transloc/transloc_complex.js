@@ -5,14 +5,14 @@ const log = console.log;
 const {getStops, getRoutes, getSegments, getVehicles, getArrivals} = require('./transloc_base');
 
 const api = {
-    vehiclesByName : (args) => {
-        return getVehiclesByName(args);
+    vehiclesByName : (rt_name) => {
+        return getVehiclesByName(rt_name);
     },
     segmentsByName : (args) => {
         return getSegmentsByName(args);
     },
-    routesByName: (args) => {
-        return getRoutesByName(args);
+    routesByName: (rt_name) => {
+        return getRoutesByName(rt_name);
     },
     stopsWithRoutes : (args) => {
         return getStopsWithRoutes(args);
@@ -91,9 +91,7 @@ async function getSegmentsByName(args){
 };
 
 // takes the route name like 'A' or 'LX' and gets all the associated vehicles.
-async function getVehiclesByName(args){
-    // get route_name from args
-    const route_name = args['name'];
+async function getVehiclesByName(rt_name){
     const routes = await getRoutes(null);
     const res = routes['data'];
     const map = {};
@@ -102,7 +100,7 @@ async function getVehiclesByName(args){
     res.forEach((it) => {map[it.route_id] = it.short_name ? it.short_name : it.long_name});
     const vehicles = await getVehicles();
     let v = vehicles['data'];
-    const vehicles_filtered = v.filter(it => map[it.route_id] === route_name);
+    const vehicles_filtered = v.filter(it => map[it.route_id] === rt_name);
     return vehicles_filtered;
 }
 
@@ -117,15 +115,14 @@ async function getRoutesAll(){
 
     for(let i = 0; i < res.length; i++){
         // console.log("calling getRoutesByName " + res.length + " times");
-        const route = await getRoutesByName({name : (res[i]['short_name'] ? res[i]['short_name'] : res[i]['long_name'])});
+        const route = await getRoutesByName((res[i]['short_name'] ? res[i]['short_name'] : res[i]['long_name']));
         allRoutes.push(route);
     }
     allRoutes = allRoutes.filter((route) => {return route['vehicles'].length > 0});
     return allRoutes;
 }
 
-async function getRoutesByName (args){
-    const rt_name = args['name'] || null;
+async function getRoutesByName (rt_name){
     const response = await getRoutes(null);
     if (response === undefined) {
         console.log('getRoutesByName received undefined; returning undefined');
@@ -145,7 +142,7 @@ async function getRoutesByName (args){
     }
 
     const rt_id = (route_obj['0']).route_id;
-    const vehicles = await getVehiclesByName(args);
+    const vehicles = await getVehiclesByName(rt_name);
     // sort the arrivals of each vehicle
     vehicles.forEach((vehicle) => {
         const arrival_est = vehicle['arrival_estimates'];

@@ -13,7 +13,7 @@ class SocketAPI {
         io.on("connection", (socket) => {
           // use this one just to get all the data in one shot. vehiclesByName takes 17s to complete when getting all routes. Needs major rewrite eventually
             setInterval(async () => {
-                    const data = await root.routesByName({});
+                    const data = await root.routesByName(null);
                     if (data === undefined) {
                         console.log("New data is undefined; not sending anything to socket")
                     } else {
